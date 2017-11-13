@@ -7,6 +7,7 @@ package app.ui;
 
 //import app.db.entity.QuoteItem;
 //import app.db.DB_quote_item;
+import app.db.DB_quote_item;
 import core.com.string.ComString;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
@@ -17,8 +18,7 @@ import javax.swing.text.NumberFormatter;
  */
 public class EditQuoteItem extends javax.swing.JFrame {
     private final Long id;
-//    private final DB_quote_item quoteItem;
-//    private final QuoteItem obj;
+    private final DB_quote_item quoteItem;
     private final int jTableRow;
     private NumberFormatter formatter;
     /**
@@ -31,8 +31,7 @@ public class EditQuoteItem extends javax.swing.JFrame {
         this.setTitle("Edit Quote Item");
         this.id = id;
         this.jTableRow = jTableRow;
-//        this.quoteItem =  new DB_quote_item();
-//        this.obj = (QuoteItem) this.quoteItem.get_fromdb(id);
+        this.quoteItem =  new DB_quote_item(id);
         initComponents();
         this.setFields();
     }
@@ -187,12 +186,12 @@ public class EditQuoteItem extends javax.swing.JFrame {
         String qut_name = qutNameField.getText();
         Double qut_price = qut_unit_price * qut_unit;
         
-//        this.obj.setQutUnitPrice(qut_unit_price);
-//        this.obj.setQutName(qut_name);
-//        this.obj.setQutUnit(qut_unit);
-//        this.obj.setQutPrice(qut_price);
-//        this.quoteItem.update();
-//        
+        this.quoteItem.set("qut_unit_price", qut_unit_price);
+        this.quoteItem.set("qut_unit", qut_unit);
+        this.quoteItem.set("qut_name", qut_name);
+        this.quoteItem.set("qut_price", qut_price);
+        this.quoteItem.update();
+        
         PriceList.jTable1.getModel().setValueAt(qut_name, jTableRow, 1);
         PriceList.jTable1.getModel().setValueAt(qut_unit, jTableRow, 2);
         PriceList.jTable1.getModel().setValueAt(ComString.format_currency(qut_price), jTableRow, 3);
