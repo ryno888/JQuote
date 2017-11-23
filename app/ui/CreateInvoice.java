@@ -6,6 +6,7 @@
 package app.ui;
 
 import app.config.Constants;
+import com.itextpdf.text.DocumentException;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
 import core.com.utils.ComClipboard;
@@ -27,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Ryno Laptop
  */
 public class CreateInvoice extends javax.swing.JFrame {
-    private final Long id;
+    private final Object id;
     private ArrayList<Object[]> itemArr;
 //    private final DB_person db_person;
 //    private final Person obj;
@@ -37,7 +38,7 @@ public class CreateInvoice extends javax.swing.JFrame {
      * Creates new form CreateInvoice
      * @param per_id
      */
-    public CreateInvoice(Long per_id) {
+    public CreateInvoice(Object per_id) {
         this.id = per_id;
         this.itemArr = new ArrayList();
 //        this.db_person =  new DB_person();
@@ -237,9 +238,19 @@ public class CreateInvoice extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        GenerateInvoice generateInvoice = new GenerateInvoice();
+        try {
+            generateInvoice.createPdf("test.pdf");
+        } catch (IOException ex) {
+            Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         if(this.itemArr.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please add items to the quote before you continue", "Alert", JOptionPane.WARNING_MESSAGE);
         }else{
+//            GenerateInvoice generateInvoice = new GenerateInvoice();
 //            ArrayList<InvoiceItem> invoiceItemArr = new ArrayList();
 //            Invoice invoice = (Invoice)db_invoice.get_fromdefault();
 //            invoice.setInvDateCreated(new Date());
@@ -257,7 +268,7 @@ public class CreateInvoice extends javax.swing.JFrame {
 //                invoiceItemArr.add(invoice_item);
 //            });
 //
-//            GenerateInvoice generateInvoice = new GenerateInvoice();
+            
 //            generateInvoice.setInv_account_nr(this.obj.getPerAccountNr());
 //            generateInvoice.setInv_invoice_nr(invoice.getInvNumber());
 //            generateInvoice.setInv_company_add_line1("");
@@ -276,6 +287,7 @@ public class CreateInvoice extends javax.swing.JFrame {
 //                generateInvoice.additem(quoteItem.getQutId(), quoteItem.getQutName(), quoteItem.getQutUnitPrice(), quoteItem.getQutUnit());
 //            });
 //            generateInvoice.saveAs();
+            
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
