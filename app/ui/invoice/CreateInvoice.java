@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.ui;
+package app.ui.invoice;
 
+import app.ui.quote.EditQuoteItem;
 import app.config.Constants;
+import app.ui.quote.QuoteItemList;
 import com.itextpdf.text.DocumentException;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
@@ -374,7 +376,7 @@ public class CreateInvoice extends javax.swing.JFrame {
             tableMenu.add(copyItem);
             tableMenu.add(cancelItem);
         } catch (IOException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //--------------------------------------------------------------------------

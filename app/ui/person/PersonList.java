@@ -8,9 +8,9 @@ package app.ui.person;
 import app.ui.person.PersonEditClient;
 import app.ui.person.PersonAddClient;
 import app.db.DB_person;
-import app.ui.CreateInvoice;
+import app.ui.invoice.CreateInvoice;
 import app.ui.MainPanel;
-import app.ui.PriceList;
+import app.ui.quote.QuoteItemList;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
 import core.com.utils.ComClipboard;
@@ -272,7 +272,7 @@ public class PersonList extends javax.swing.JFrame {
             }
             rowList.forEach(e -> model.addRow((Object[]) e));
         } catch (SQLException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //--------------------------------------------------------------------------
@@ -344,7 +344,7 @@ public class PersonList extends javax.swing.JFrame {
             tableMenu.add(copyItem);
             tableMenu.add(cancelItem);
         } catch (IOException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //--------------------------------------------------------------------------

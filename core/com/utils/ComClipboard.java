@@ -13,7 +13,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
-import static app.ui.PriceList.jTable1;
+import static app.ui.quote.QuoteItemList.jTable1;
 
 /**
  *

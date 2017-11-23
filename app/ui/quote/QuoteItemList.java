@@ -7,8 +7,10 @@
  * @programmer Ryno van Zyl * 
  * @date 25 Aug 2017 * 
  */
-package app.ui;
+package app.ui.quote;
 
+import app.ui.quote.EditQuoteItem;
+import app.ui.quote.AddQuoteItem;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
 import core.com.utils.ComClipboard;
@@ -32,12 +34,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ryno
  */
-public class PriceList extends javax.swing.JFrame {
+public class QuoteItemList extends javax.swing.JFrame {
 
     /**
      * Creates new form PriceList
      */
-    public PriceList() {
+    public QuoteItemList() {
         initComponents();
         this.setTitle("Quote Item List");
         this.setTableContents();
@@ -64,7 +66,6 @@ public class PriceList extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 500));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
 
@@ -240,20 +241,21 @@ public class PriceList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PriceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuoteItemList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PriceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuoteItemList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PriceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuoteItemList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PriceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuoteItemList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PriceList().setVisible(true);
+                new QuoteItemList().setVisible(true);
             }
         });
     }
@@ -290,7 +292,7 @@ public class PriceList extends javax.swing.JFrame {
             }
             rowList.forEach(e -> model.addRow((Object[]) e));
         } catch (SQLException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //--------------------------------------------------------------------------
@@ -353,7 +355,7 @@ public class PriceList extends javax.swing.JFrame {
             tableMenu.add(copyItem);
             tableMenu.add(cancelItem);
         } catch (IOException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //---------------------------------------------------------------------------

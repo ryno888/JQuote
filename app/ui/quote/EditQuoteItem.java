@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.ui;
+package app.ui.quote;
 
 //import app.db.entity.QuoteItem;
 //import app.db.DB_quote_item;
@@ -192,10 +192,10 @@ public class EditQuoteItem extends javax.swing.JFrame {
         this.quoteItem.set("qut_price", qut_price);
         this.quoteItem.update();
         
-        PriceList.jTable1.getModel().setValueAt(qut_name, jTableRow, 1);
-        PriceList.jTable1.getModel().setValueAt(qut_unit, jTableRow, 2);
-        PriceList.jTable1.getModel().setValueAt(ComString.format_currency(qut_price), jTableRow, 3);
-        PriceList.jTable1.getModel().setValueAt(ComString.format_currency(qut_unit_price), jTableRow, 4);
+        QuoteItemList.jTable1.getModel().setValueAt(qut_name, jTableRow, 1);
+        QuoteItemList.jTable1.getModel().setValueAt(qut_unit, jTableRow, 2);
+        QuoteItemList.jTable1.getModel().setValueAt(ComString.format_currency(qut_price), jTableRow, 3);
+        QuoteItemList.jTable1.getModel().setValueAt(ComString.format_currency(qut_unit_price), jTableRow, 4);
         
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

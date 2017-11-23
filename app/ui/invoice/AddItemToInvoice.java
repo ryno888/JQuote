@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.ui;
+package app.ui.invoice;
 
+import app.ui.quote.QuoteItemList;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
 import core.com.string.ComString;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import static app.ui.PriceList.jTable1;
+import static app.ui.quote.QuoteItemList.jTable1;
 
 /**
  *
@@ -171,7 +172,7 @@ public class AddItemToInvoice extends javax.swing.JFrame {
             }
             rowList.forEach(e -> model.addRow((Object[]) e));
         } catch (SQLException ex) {
-            Logger.getLogger(PriceList.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //--------------------------------------------------------------------------

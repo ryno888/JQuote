@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.ui;
+package app.ui.quote;
 
 import app.db.DB_quote_item;
 import core.com.string.ComString;
@@ -177,7 +177,7 @@ public class AddQuoteItem extends javax.swing.JFrame {
 		this.quoteItem.set("qut_unit_price", qut_unit_price);
 		id = this.quoteItem.insert();
 		
-        DefaultTableModel model = (DefaultTableModel) PriceList.jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) QuoteItemList.jTable1.getModel();
         model.addRow(new Object[]{
             id, 
             this.quoteItem.get("qut_name"), 

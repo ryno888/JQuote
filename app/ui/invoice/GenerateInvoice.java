@@ -7,7 +7,7 @@
  * @programmer Ryno van Zyl * 
  * @date 23 Nov 2017 * 
  */
-package app.ui;
+package app.ui.invoice;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

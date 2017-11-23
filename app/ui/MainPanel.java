@@ -5,6 +5,7 @@
  */
 package app.ui;
 
+import app.ui.quote.QuoteItemList;
 import app.ui.person.PersonList;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MainPanel extends javax.swing.JFrame {
         }
 //        tabWrapperPane.addTab("Dashboard", new Dashboard(scores));
         tabWrapperPane.addTab("Client List", new PersonList().getRootPane());
-        tabWrapperPane.addTab("Price List", new PriceList().getRootPane());
+        tabWrapperPane.addTab("Price List", new QuoteItemList().getRootPane());
     }
 
     /**
