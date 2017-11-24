@@ -11,6 +11,8 @@ package app.main;
 
 import app.config.Setup;
 import app.ui.MainPanel;
+import core.com.html.ComHtmlBuilder;
+import java.util.HashMap;
 
 /**
  *
@@ -23,9 +25,19 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-		MainPanel main = new MainPanel();
-		main.setTitle(Setup.SYSTEM_NAME);
-		main.setVisible(true);
+        
+//        ComHtmlBuilder builder = new ComHtmlBuilder();
+//        builder.label("Ryno", new HashMap<String, Object>(){{
+//            this.put(".test", true);
+//            this.put(".test2", true);
+//            this.put("@test1", "test1");
+//            this.put("@test2", "test2");
+//        }});
+//        System.out.println(builder.get_html());
+        
+        MainPanel main = new MainPanel();
+        main.setTitle(Setup.SYSTEM_NAME);
+        main.setVisible(true);
     }
     
 }
