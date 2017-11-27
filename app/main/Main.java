@@ -29,9 +29,10 @@ public class Main {
 //        ComHtmlBuilder builder = new ComHtmlBuilder();
 //        builder.label("Ryno", new HashMap<String, Object>(){{
 //            this.put(".test", true);
-//            this.put(".test2", true);
 //            this.put("@test1", "test1");
-//            this.put("@test2", "test2");
+//        }});
+//        builder.header(1,"Ryno", new HashMap<String, Object>(){{
+//			this.put("@111", "111");
 //        }});
 //        System.out.println(builder.get_html());
         

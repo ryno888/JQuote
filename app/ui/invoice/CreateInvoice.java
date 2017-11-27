@@ -241,13 +241,24 @@ public class CreateInvoice extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         GenerateInvoice generateInvoice = new GenerateInvoice();
-        try {
-            generateInvoice.createPdf("test.pdf");
-        } catch (IOException ex) {
-            Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
-        }
+		generateInvoice.setInv_account_nr("");
+		generateInvoice.setInv_invoice_nr("");
+		generateInvoice.setInv_company_add_line1("");
+		generateInvoice.setInv_company_add_line2("");
+		generateInvoice.setInv_company_city("Cape Town");
+		generateInvoice.setInv_company_code("7550");
+		generateInvoice.setInv_company_country("South Africa");
+		generateInvoice.setInv_company_name("");
+		generateInvoice.setInv_total(100.00);
+		generateInvoice.setInv_date_created("");
+//		invoiceItemArr.forEach(e -> {
+//			InvoiceItem invoice_item = (InvoiceItem) e;
+//			DB_quote_item db_quote_item = new DB_quote_item();
+//			QuoteItem quoteItem = (QuoteItem) db_quote_item.get_fromdb(invoice_item.getIniRefQuoteItem());
+//
+//			generateInvoice.additem(quoteItem.getQutId(), quoteItem.getQutName(), quoteItem.getQutUnitPrice(), quoteItem.getQutUnit());
+//		});
+		generateInvoice.saveAs();
         
         if(this.itemArr.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please add items to the quote before you continue", "Alert", JOptionPane.WARNING_MESSAGE);

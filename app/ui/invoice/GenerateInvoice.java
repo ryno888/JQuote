@@ -1,314 +1,406 @@
 /*
- * Class 
- * @filename GenerateInvoice 
- * @encoding UTF-8
- * @author Liquid Edge Solutions  * 
- * @copyright Copyright Liquid Edge Solutions. All rights reserved. * 
- * @programmer Ryno van Zyl * 
- * @date 23 Nov 2017 * 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package app.ui.invoice;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.ElementList;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
- 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 /**
  *
- * @author Ryno
+ * @author Ryno Laptop
  */
-class GenerateInvoice {
+import app.config.Constants;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
+import core.com.date.ComDate;
+
+import java.io.File;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+public class GenerateInvoice {
+
+    private BaseFont bfBold;
+    private BaseFont bf;
+    private int pageNumber = 0;
     
-    public void createPdf(String file) throws IOException, DocumentException {
-        // step 1
-        Document document = new Document();
-        // step 2
-        PdfWriter.getInstance(document, new FileOutputStream(file));
-        // step 3
-        document.open();
-        // step 4
-        StringBuilder sb = new StringBuilder();
-//        sb.append("<div>\n<p align=\"center\">");
-        sb.append("<style>"
-                + "@font-face {\n" +
-"  font-family: SourceSansPro;\n" +
-"  src: url(SourceSansPro-Regular.ttf);\n" +
-"}\n" +
-"\n" +
-".clearfix:after {\n" +
-"  content: \"\";\n" +
-"  display: table;\n" +
-"  clear: both;\n" +
-"}\n" +
-"\n" +
-"a {\n" +
-"  color: #0087C3;\n" +
-"  text-decoration: none;\n" +
-"}\n" +
-"\n" +
-"body {\n" +
-"  position: relative;\n" +
-"  width: 21cm;  \n" +
-"  height: 29.7cm; \n" +
-"  margin: 0 auto; \n" +
-"  color: #555555;\n" +
-"  background: #FFFFFF; \n" +
-"  font-family: Arial, sans-serif; \n" +
-"  font-size: 14px; \n" +
-"  font-family: SourceSansPro;\n" +
-"}\n" +
-"\n" +
-"header {\n" +
-"  padding: 10px 0;\n" +
-"  margin-bottom: 20px;\n" +
-"  border-bottom: 1px solid #AAAAAA;\n" +
-"}\n" +
-"\n" +
-"#logo {\n" +
-"  float: left;\n" +
-"  margin-top: 8px;\n" +
-"}\n" +
-"\n" +
-"#logo img {\n" +
-"  height: 70px;\n" +
-"}\n" +
-"\n" +
-"#company {\n" +
-"  float: right;\n" +
-"  text-align: right;\n" +
-"}\n" +
-"\n" +
-"\n" +
-"#details {\n" +
-"  margin-bottom: 50px;\n" +
-"}\n" +
-"\n" +
-"#client {\n" +
-"  padding-left: 6px;\n" +
-"  border-left: 6px solid #0087C3;\n" +
-"  float: left;\n" +
-"}\n" +
-"\n" +
-"#client .to {\n" +
-"  color: #777777;\n" +
-"}\n" +
-"\n" +
-"h2.name {\n" +
-"  font-size: 1.4em;\n" +
-"  font-weight: normal;\n" +
-"  margin: 0;\n" +
-"}\n" +
-"\n" +
-"#invoice {\n" +
-"  float: right;\n" +
-"  text-align: right;\n" +
-"}\n" +
-"\n" +
-"#invoice h1 {\n" +
-"  color: #0087C3;\n" +
-"  font-size: 2.4em;\n" +
-"  line-height: 1em;\n" +
-"  font-weight: normal;\n" +
-"  margin: 0  0 10px 0;\n" +
-"}\n" +
-"\n" +
-"#invoice .date {\n" +
-"  font-size: 1.1em;\n" +
-"  color: #777777;\n" +
-"}\n" +
-"\n" +
-"table {\n" +
-"  width: 100%;\n" +
-"  border-collapse: collapse;\n" +
-"  border-spacing: 0;\n" +
-"  margin-bottom: 20px;\n" +
-"}\n" +
-"\n" +
-"table th,\n" +
-"table td {\n" +
-"  padding: 20px;\n" +
-"  background: #EEEEEE;\n" +
-"  text-align: center;\n" +
-"  border-bottom: 1px solid #FFFFFF;\n" +
-"}\n" +
-"\n" +
-"table th {\n" +
-"  white-space: nowrap;        \n" +
-"  font-weight: normal;\n" +
-"}\n" +
-"\n" +
-"table td {\n" +
-"  text-align: right;\n" +
-"}\n" +
-"\n" +
-"table td h3{\n" +
-"  color: #57B223;\n" +
-"  font-size: 1.2em;\n" +
-"  font-weight: normal;\n" +
-"  margin: 0 0 0.2em 0;\n" +
-"}\n" +
-"\n" +
-"table .no {\n" +
-"  color: #FFFFFF;\n" +
-"  font-size: 1.6em;\n" +
-"  background: #57B223;\n" +
-"}\n" +
-"\n" +
-"table .desc {\n" +
-"  text-align: left;\n" +
-"}\n" +
-"\n" +
-"table .unit {\n" +
-"  background: #DDDDDD;\n" +
-"}\n" +
-"\n" +
-"table .qty {\n" +
-"}\n" +
-"\n" +
-"table .total {\n" +
-"  background: #57B223;\n" +
-"  color: #FFFFFF;\n" +
-"}\n" +
-"\n" +
-"table td.unit,\n" +
-"table td.qty,\n" +
-"table td.total {\n" +
-"  font-size: 1.2em;\n" +
-"}\n" +
-"\n" +
-"table tbody tr:last-child td {\n" +
-"  border: none;\n" +
-"}\n" +
-"\n" +
-"table tfoot td {\n" +
-"  padding: 10px 20px;\n" +
-"  background: #FFFFFF;\n" +
-"  border-bottom: none;\n" +
-"  font-size: 1.2em;\n" +
-"  white-space: nowrap; \n" +
-"  border-top: 1px solid #AAAAAA; \n" +
-"}\n" +
-"\n" +
-"table tfoot tr:first-child td {\n" +
-"  border-top: none; \n" +
-"}\n" +
-"\n" +
-"table tfoot tr:last-child td {\n" +
-"  color: #57B223;\n" +
-"  font-size: 1.4em;\n" +
-"  border-top: 1px solid #57B223; \n" +
-"\n" +
-"}\n" +
-"\n" +
-"table tfoot tr td:first-child {\n" +
-"  border: none;\n" +
-"}\n" +
-"\n" +
-"#thanks{\n" +
-"  font-size: 2em;\n" +
-"  margin-bottom: 50px;\n" +
-"}\n" +
-"\n" +
-"#notices{\n" +
-"  padding-left: 6px;\n" +
-"  border-left: 6px solid #0087C3;  \n" +
-"}\n" +
-"\n" +
-"#notices .notice {\n" +
-"  font-size: 1.2em;\n" +
-"}\n" +
-"\n" +
-"footer {\n" +
-"  color: #777777;\n" +
-"  width: 100%;\n" +
-"  height: 30px;\n" +
-"  position: absolute;\n" +
-"  bottom: 0;\n" +
-"  border-top: 1px solid #AAAAAA;\n" +
-"  padding: 8px 0;\n" +
-"  text-align: center;\n" +
-"}\n" +
-""
-                + "</style>"
-                + "<table>\n" +
-"        <thead>\n" +
-"          <tr>\n" +
-"            <th class=\"service\">SERVICE</th>\n" +
-"            <th class=\"desc\">DESCRIPTION</th>\n" +
-"            <th>PRICE</th>\n" +
-"            <th>QTY</th>\n" +
-"            <th>TOTAL</th>\n" +
-"          </tr>\n" +
-"        </thead>\n" +
-"        <tbody>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Design</td>\n" +
-"            <td class=\"desc\">Creating a recognizable design solution based on the company's existing visual identity</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">26</td>\n" +
-"            <td class=\"total\">$1,040.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Development</td>\n" +
-"            <td class=\"desc\">Developing a Content Management System-based Website</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">80</td>\n" +
-"            <td class=\"total\">$3,200.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">SEO</td>\n" +
-"            <td class=\"desc\">Optimize the site for search engines (SEO)</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">20</td>\n" +
-"            <td class=\"total\">$800.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Training</td>\n" +
-"            <td class=\"desc\">Initial training sessions for staff responsible for uploading web content</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">4</td>\n" +
-"            <td class=\"total\">$160.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\" class=\"sub\">SUBTOTAL</td>\n" +
-"            <td class=\"sub total\">$5,200.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\">TAX 25%</td>\n" +
-"            <td class=\"total\">$1,300.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\" class=\"grand total\">GRAND TOTAL</td>\n" +
-"            <td class=\"grand total\">$6,500.00</td>\n" +
-"          </tr>\n" +
-"        </tbody>\n" +
-"      </table>");
-//        sb.append("<font size=\"5\">");
-//        sb.append("<b>&nbsp;<font color=\"#32cd32\">My centered Para</font></b>");
-//        sb.append("</font>");
-//        sb.append("<font color=\"#32cd32\">&nbsp;</font>");
-//        sb.append("</p>\n</div>");
- 
-        PdfPTable table = new PdfPTable(1);
-        PdfPCell cell = new PdfPCell();
-        ElementList list = XMLWorkerHelper.parseToElementList(sb.toString(), null);
-        for (Element element : list) {
-            cell.addElement(element);
-        }
-        table.addCell(cell);
-        document.add(table);
- 
-        // step 5
-        document.close();
+    
+    private String inv_invoice_nr;
+    private String inv_account_nr;
+    private String inv_company_name;
+    
+    private String inv_company_add_line1;
+    private String inv_company_add_line2;
+    private String inv_company_city;
+    private String inv_company_suburb;
+    private String inv_company_code;
+    private String inv_company_country;
+    private String inv_date_created;
+    private final DecimalFormat formatter = new DecimalFormat("R ###,###,##0.00");
+    private Double inv_sub_total;
+    private Double inv_total;
+    private final ArrayList<Object[]> item_arr = new ArrayList();
+    
+    //------------------------------------------------------------------------------
+    public GenerateInvoice() {
+        this.inv_invoice_nr = "";
+        this.inv_account_nr = "";
+        this.inv_company_name = "";
+
+        this.inv_company_add_line1 = "";
+        this.inv_company_add_line2 = "";
+        this.inv_company_city = "";
+        this.inv_company_suburb = "";
+        this.inv_company_code = "";
+        this.inv_company_country = "";
+        this.inv_date_created = ComDate.getDate(Constants.DATE);
+        this.inv_sub_total = 0.00;
+        this.inv_total = 0.00;
     }
-    
+    //------------------------------------------------------------------------------
+    public void additem(Object id, Object description, Object unitprice, Object qty) {
+        Double price  = Double.parseDouble(unitprice.toString()) * Double.parseDouble(qty.toString());
+        item_arr.add(new Object[]{id, description, qty, formatter.format(unitprice), formatter.format(price)});
+    }
+    //------------------------------------------------------------------------------
+    public String getFileName() {
+        return "Invoice - "+this.inv_invoice_nr + ".pdf";
+    }
+    //------------------------------------------------------------------------------
+    public void saveAs() {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setSelectedFile(new File(this.getFileName()));
+        int returnLatih = jFileChooser.showSaveDialog(null);
+        
+        jFileChooser.getSelectedFile();
+        if (returnLatih == JFileChooser.APPROVE_OPTION) {
+            this.createPDF(jFileChooser.getSelectedFile().toString());
+            JOptionPane.showMessageDialog(null, "File successfully saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            System.out.println("File Chooser was cancelled");      
+        }
+    }
+    //------------------------------------------------------------------------------
+    public void createPDF(String pdfFilename) {
+
+        Document doc = new Document();
+        PdfWriter docWriter = null;
+        initializeFonts();
+        
+        if(pdfFilename == null){ pdfFilename = getFileName(); }
+
+        try {
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream(pdfFilename));
+            doc.addAuthor("Ryno van Zyl");
+            doc.addCreationDate();
+            doc.addProducer();
+            doc.addCreator("Prologue");
+            doc.addTitle("Invoice - "+this.inv_invoice_nr);
+            doc.setPageSize(PageSize.LETTER);
+
+            doc.open();
+            PdfContentByte cb = docWriter.getDirectContent();
+
+            boolean beginPage = true;
+            int y = 0;
+
+            for (int i = 0; i < item_arr.size(); i++) {
+                if (beginPage) {
+                    beginPage = false;
+                    generateLayout(doc, cb);
+                    generateHeader(doc, cb);
+                    y = 615;
+                }
+                generateDetail(doc, cb, i, y, item_arr.get(i));
+                y = y - 15;
+                if (y < 150) {
+                    generateFooter(doc, cb);
+                    printPageNumber(cb);
+                    doc.newPage();
+                    beginPage = true;
+                }else{
+                    generateFooter(doc, cb);
+                }
+            }
+            printPageNumber(cb);
+
+        } catch (DocumentException dex) {
+            dex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (doc != null) {
+                doc.close();
+            }
+            if (docWriter != null) {
+                docWriter.close();
+            }
+        }
+    }
+    //------------------------------------------------------------------------------
+    private void generateLayout(Document doc, PdfContentByte cb) {
+
+        try {
+
+            cb.setLineWidth(1f);
+
+            // Invoice Header box Text Headings 
+            createHeadings(cb, 422, 733, "Account No.");
+            createHeadings(cb, 422, 713, "Invoice No.");
+            createHeadings(cb, 422, 693, "Invoice Date");
+
+            // Invoice Detail box layout 
+            cb.rectangle(30, 150, 540, 500);
+            cb.moveTo(30, 630);
+            cb.lineTo(570, 630);
+            cb.moveTo(90, 150);
+            cb.lineTo(90, 650);
+            cb.moveTo(150, 150);
+            cb.lineTo(150, 650);
+            cb.moveTo(430, 150);
+            cb.lineTo(430, 650);
+            cb.moveTo(500, 150);
+            cb.lineTo(500, 650);
+            cb.stroke();
+
+            // Invoice Detail box Text Headings 
+            createHeadings(cb, 32, 633, "Item Code");
+            createHeadings(cb, 92, 633, "Quantity");
+            createHeadings(cb, 152, 633, "Item Description");
+            createHeadings(cb, 432, 633, "Unit Price");
+            createHeadings(cb, 502, 633, "Excl. Total");
+
+            //add the images
+            Image companyLogo = Image.getInstance(getClass().getResource("/assets/pdf/pdf-header.png"));
+            companyLogo.setAbsolutePosition(25, 700);
+            companyLogo.scalePercent(40);
+            doc.add(companyLogo);
+
+        } catch (DocumentException dex) {
+            dex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------
+    private void generateHeader(Document doc, PdfContentByte cb) {
+
+        try {
+
+            createHeadings(cb, 250, 740, this.inv_company_name);
+            createHeadings(cb, 250, 725, this.inv_company_add_line1);
+            createHeadings(cb, 250, 710, this.inv_company_add_line2);
+            createHeadings(cb, 250, 695, this.inv_company_city + ", " + this.inv_company_suburb + " - " + this.inv_company_code);
+            createHeadings(cb, 250, 680, this.inv_company_country);
+
+            createHeadings(cb, 482, 733, this.inv_account_nr);
+            createHeadings(cb, 482, 713, this.inv_invoice_nr);
+            createHeadings(cb, 482, 693, this.inv_date_created);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------
+    private void generateFooter(Document doc, PdfContentByte cb) {
+
+        try {
+            String subtotal = this.inv_sub_total == 0.00 ? " - " : formatter.format(this.inv_sub_total);
+                    
+            createContent(cb, 498, 105, "Sub Total", PdfContentByte.ALIGN_RIGHT, 10);
+            createContent(cb, 568, 105, subtotal, PdfContentByte.ALIGN_RIGHT, 10);
+            createContent(cb, 498, 90, "Total (Excl. VAT)", PdfContentByte.ALIGN_RIGHT, 10);
+            createContent(cb, 568, 90, formatter.format(this.inv_total), PdfContentByte.ALIGN_RIGHT, 10);
+            
+            createContent(cb, 32, 120, "Banking Details:", PdfContentByte.ALIGN_LEFT, 10);
+            
+            createContent(cb, 32, 105, "Bank:", PdfContentByte.ALIGN_LEFT, 10);
+            createContent(cb, 200, 105, "Capitec", PdfContentByte.ALIGN_RIGHT, 10);
+            
+            createContent(cb, 32, 90, "Branch:", PdfContentByte.ALIGN_LEFT, 10);
+            createContent(cb, 200, 90, "470010", PdfContentByte.ALIGN_RIGHT, 10);
+            
+            createContent(cb, 32, 75, "Account Name:", PdfContentByte.ALIGN_LEFT, 10);
+            createContent(cb, 200, 75, "Prologue", PdfContentByte.ALIGN_RIGHT, 10);
+            
+            createContent(cb, 32, 60, "Account #:", PdfContentByte.ALIGN_LEFT, 10);
+            createContent(cb, 200, 60, "132 246 2656", PdfContentByte.ALIGN_RIGHT, 10);
+            
+            createContent(cb, 32, 45, "Account Type:", PdfContentByte.ALIGN_LEFT, 10);
+            createContent(cb, 200, 45, "Savings", PdfContentByte.ALIGN_RIGHT, 10);
+            
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------
+    private void generateDetail(Document doc, PdfContentByte cb, int index, int y, Object[] obj) {
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            createContent(cb, 36, y, "ITEM" + obj[0].toString(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 96, y, obj[2].toString(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 152, y, obj[1].toString(), PdfContentByte.ALIGN_LEFT);
+
+            createContent(cb, 498, y, obj[3].toString(), PdfContentByte.ALIGN_RIGHT);
+            createContent(cb, 568, y, obj[4].toString(), PdfContentByte.ALIGN_RIGHT);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------
+    private void createHeadings(PdfContentByte cb, float x, float y, String text) {
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 8);
+        cb.setTextMatrix(x, y);
+        cb.showText(text.trim());
+        cb.endText();
+
+    }
+    //------------------------------------------------------------------------------
+    private void printPageNumber(PdfContentByte cb) {
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 8);
+        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber + 1), 570, 25, 0);
+        cb.endText();
+
+        pageNumber++;
+
+    }
+    //------------------------------------------------------------------------------
+    private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
+        createContent(cb, x, y, text, align, 8);
+    }
+    //------------------------------------------------------------------------------
+    private void createContent(PdfContentByte cb, float x, float y, String text, int align, int fontSize) {
+
+        cb.beginText();
+        cb.setFontAndSize(bf, fontSize);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
+        cb.endText();
+
+    }
+    //------------------------------------------------------------------------------
+    private void initializeFonts() {
+
+        try {
+            bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_invoice_nr() {
+        return inv_invoice_nr;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_invoice_nr(String inv_invoice_nr) {
+        this.inv_invoice_nr = inv_invoice_nr;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_account_nr() {
+        return inv_account_nr;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_account_nr(String inv_account_nr) {
+        this.inv_account_nr = inv_account_nr;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_name() {
+        return inv_company_name;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_name(String inv_company_name) {
+        this.inv_company_name = inv_company_name;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_add_line1() {
+        return inv_company_add_line1;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_add_line1(String inv_company_add_line1) {
+        this.inv_company_add_line1 = inv_company_add_line1;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_add_line2() {
+        return inv_company_add_line2;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_add_line2(String inv_company_add_line2) {
+        this.inv_company_add_line2 = inv_company_add_line2;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_city() {
+        return inv_company_city;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_city(String inv_company_city) {
+        this.inv_company_city = inv_company_city;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_suburb() {
+        return inv_company_suburb;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_suburb(String inv_company_suburb) {
+        this.inv_company_suburb = inv_company_suburb;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_code() {
+        return inv_company_code;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_code(String inv_company_code) {
+        this.inv_company_code = inv_company_code;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_company_country() {
+        return inv_company_country;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_company_country(String inv_company_country) {
+        this.inv_company_country = inv_company_country;
+    }
+    //------------------------------------------------------------------------------
+    public String getInv_date_created() {
+        return inv_date_created;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_date_created(String inv_date_created) {
+        this.inv_date_created = inv_date_created;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_sub_total(Double subtotal) {
+        this.inv_sub_total = subtotal;
+    }
+    //------------------------------------------------------------------------------
+    public void setInv_total(Double total) {
+        this.inv_total = total;
+    }
+    //------------------------------------------------------------------------------
 }
