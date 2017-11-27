@@ -9,10 +9,13 @@
  */
 package app.main;
 
+import app.app.AppSystem;
 import app.config.Setup;
 import app.ui.MainPanel;
 import core.com.html.ComHtmlBuilder;
 import java.util.HashMap;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -24,7 +27,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        AppSystem.set_look_and_feel();
         
 //        ComHtmlBuilder builder = new ComHtmlBuilder();
 //        builder.label("Ryno", new HashMap<String, Object>(){{
