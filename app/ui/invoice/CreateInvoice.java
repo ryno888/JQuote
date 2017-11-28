@@ -6,17 +6,16 @@
 package app.ui.invoice;
 
 import app.ui.quote.EditQuoteItem;
-import app.config.Constants;
+import app.db.DB_address;
+import app.db.DB_invoice;
+import app.db.DB_person;
 import app.ui.quote.QuoteItemList;
-import com.itextpdf.text.DocumentException;
+import core.com.date.ComDate;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
 import core.com.utils.ComClipboard;
-import core.com.date.ComDate;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -31,8 +30,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CreateInvoice extends javax.swing.JFrame {
     private final Object id;
-    private ArrayList<Object[]> itemArr;
-//    private final DB_person db_person;
+    private final ArrayList<Object[]> itemArr;
+    private final DB_person db_person;
+    private final DB_address db_address;
+    private final DB_invoice db_invoice;
 //    private final Person obj;
 //    private final DB_invoice db_invoice = new DB_invoice();
     Double invCostExcl = 0.00;
@@ -43,8 +44,9 @@ public class CreateInvoice extends javax.swing.JFrame {
     public CreateInvoice(Object per_id) {
         this.id = per_id;
         this.itemArr = new ArrayList();
-//        this.db_person =  new DB_person();
-//        this.obj = (Person) this.db_person.get_fromdb(id);
+        this.db_person = new DB_person(per_id);
+        this.db_invoice = new DB_invoice();
+        this.db_address = db_person.get_address();
         
         initComponents();
         this.setPopupMenu();
@@ -241,16 +243,16 @@ public class CreateInvoice extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         GenerateInvoice generateInvoice = new GenerateInvoice();
-		generateInvoice.setInv_account_nr("34342");
-		generateInvoice.setInv_invoice_nr("432");
-		generateInvoice.setInv_company_add_line1("32");
-		generateInvoice.setInv_company_add_line2("423");
-		generateInvoice.setInv_company_city("Cape Town");
-		generateInvoice.setInv_company_code("7550");
-		generateInvoice.setInv_company_country("South Africa");
-		generateInvoice.setInv_company_name("432");
-		generateInvoice.setInv_total(100.00);
-		generateInvoice.setInv_date_created("432");
+		generateInvoice.setInv_account_nr(this.db_person.get("per_account_nr").toString());
+		generateInvoice.setInv_company_name(this.db_person.get("per_trading_name").toString());
+		generateInvoice.setInv_invoice_nr(this.db_invoice.get("inv_number").toString());
+		generateInvoice.setInv_company_add_line1(this.db_address.get("add_line1").toString());
+		generateInvoice.setInv_company_add_line2(this.db_address.get("add_line2").toString());
+		generateInvoice.setInv_company_city(this.db_address.get("add_suburb").toString());
+		generateInvoice.setInv_company_code(this.db_address.get("add_code").toString());
+		generateInvoice.setInv_company_country(this.db_address.get("add_country").toString());
+		generateInvoice.setInv_total(calculateInvoiceTotal());
+		generateInvoice.setInv_date_created(ComDate.getDate());
                 generateInvoice.additem(1, "test1", 5.0, 2);
                 generateInvoice.additem(1, "test2", 5.0, 3);
 //		invoiceItemArr.forEach(e -> {
@@ -394,9 +396,9 @@ public class CreateInvoice extends javax.swing.JFrame {
     }
     //--------------------------------------------------------------------------
     private void setFields() {
-//        perAttentionToField.setText(this.db_person.formatName());
-//        perTradingNameField.setText(this.obj.getPerTradingName());
-//        invNumberField.setText(db_invoice.generateInvoiceNr());
+        perAttentionToField.setText(this.db_person.format_name());
+        perTradingNameField.setText(this.db_person.get("per_trading_name").toString());
+        invNumberField.setText(this.db_invoice.generate_invoice_nr());
     }
     //--------------------------------------------------------------------------
     public void addItem(String qut_id, String qut_name, String qut_unit, String qut_price, String qut_unit_price) {
@@ -408,7 +410,6 @@ public class CreateInvoice extends javax.swing.JFrame {
             qut_unit_price
         };
         this.itemArr.add(object);
-        System.out.println(object);
         DefaultTableModel model = (DefaultTableModel) addedItemsTable.getModel();
         model.addRow(object);
         calculateInvoiceTotal();

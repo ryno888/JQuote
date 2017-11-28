@@ -1,6 +1,6 @@
 /*
  * Class 
- * @filename DB_quote_item 
+ * @filename DB_invoice 
  * @encoding UTF-8
  * @author Liquid Edge Solutions  * 
  * @copyright Copyright Liquid Edge Solutions. All rights reserved. * 
@@ -18,37 +18,36 @@ import java.util.HashMap;
  *
  * @author Ryno
  */
-public class DB_address extends ComDBTable implements DB_table_interface{
+public class DB_invoice extends ComDBTable implements DB_table_interface{
 	
     //--------------------------------------------------------------------------
-    public DB_address(){ this.get_fromdefault(); }
+    public DB_invoice(){ this.get_fromdefault(); }
     //--------------------------------------------------------------------------
-    public DB_address(Object mixed){ this.get_fromdb(mixed); }
+    public DB_invoice(Object mixed){ this.get_fromdb(mixed); }
     //--------------------------------------------------------------------------
     @Override
     public HashMap <String, DB_datatype.Datatype> get_field_arr() {
         HashMap arr = new HashMap();
-        arr.put("add_id"			, DB_datatype.Datatype.INT);
-        arr.put("add_line1"			, DB_datatype.Datatype.VARCHAR);
-        arr.put("add_line2"			, DB_datatype.Datatype.VARCHAR);
-        arr.put("add_suburb"                    , DB_datatype.Datatype.VARCHAR);
-        arr.put("add_town"			, DB_datatype.Datatype.VARCHAR);
-        arr.put("add_country"                   , DB_datatype.Datatype.VARCHAR);
-        arr.put("add_code"			, DB_datatype.Datatype.VARCHAR);
-        arr.put("add_ref_person"                , DB_datatype.Datatype.REFERENCE.set_reference("person"));
+        arr.put("inv_id"			, DB_datatype.Datatype.INT);
+        arr.put("inv_number"			, DB_datatype.Datatype.VARCHAR);
+        arr.put("inv_ref_person"                , DB_datatype.Datatype.REFERENCE.set_reference("person"));
+        arr.put("inv_total_excl"                , DB_datatype.Datatype.DOUBLE);
+        arr.put("inv_date_created"              , DB_datatype.Datatype.DATETIME);
         return arr;
     }
     //--------------------------------------------------------------------------
-    @Override
-    public String get_key() { return "add_id"; }
+    @Override public String get_key() { return "inv_id"; }
     //--------------------------------------------------------------------------
-    @Override
-    public String get_table() { return "address"; }
+    @Override public String get_table() { return "invoice"; }
     //--------------------------------------------------------------------------
-    @Override
-    public String get_name() { return "Address"; }
+    @Override public String get_name() { return "Invoice"; }
     //--------------------------------------------------------------------------
-    @Override
-    public String get_display() { return "add_line1"; }
+    @Override public String get_display() { return "inv_number"; }
+    //--------------------------------------------------------------------------
+	// methods
+    //--------------------------------------------------------------------------
+    public String generate_invoice_nr() {
+        return "121212";
+    }
     //--------------------------------------------------------------------------
 }

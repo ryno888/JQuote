@@ -32,7 +32,7 @@ public class DB_quote_item extends ComDBTable implements DB_table_interface{
         arr.put("qut_id"			, DB_datatype.Datatype.INT);
         arr.put("qut_name"			, DB_datatype.Datatype.VARCHAR);
         arr.put("qut_unit"			, DB_datatype.Datatype.INT);
-        arr.put("qut_unit_price"	, DB_datatype.Datatype.DOUBLE);
+        arr.put("qut_unit_price"                , DB_datatype.Datatype.DOUBLE);
         arr.put("qut_price"			, DB_datatype.Datatype.DOUBLE);
         return arr;
     }
