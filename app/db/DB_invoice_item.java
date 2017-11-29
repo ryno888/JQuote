@@ -10,7 +10,6 @@
 package app.db;
 
 import core.com.db.ComDBTable;
-import core.com.string.ComString;
 import core.interfaces.DB_datatype;
 import core.interfaces.DB_table_interface;
 import java.util.HashMap;
@@ -19,41 +18,34 @@ import java.util.HashMap;
  *
  * @author Ryno
  */
-public class DB_invoice extends ComDBTable implements DB_table_interface{
+public class DB_invoice_item extends ComDBTable implements DB_table_interface{
 	
     //--------------------------------------------------------------------------
-    public DB_invoice(){ this.get_fromdefault(); }
+    public DB_invoice_item(){ this.get_fromdefault(); }
     //--------------------------------------------------------------------------
-    public DB_invoice(Object mixed){ this.get_fromdb(mixed); }
+    public DB_invoice_item(Object mixed){ this.get_fromdb(mixed); }
     //--------------------------------------------------------------------------
     @Override
     public HashMap <String, DB_datatype.Datatype> get_field_arr() {
         HashMap arr = new HashMap();
-        arr.put("inv_id"			, DB_datatype.Datatype.INT);
-        arr.put("inv_number"			, DB_datatype.Datatype.VARCHAR);
-        arr.put("inv_ref_person"                , DB_datatype.Datatype.REFERENCE.set_reference("person"));
-        arr.put("inv_total_excl"                , DB_datatype.Datatype.DOUBLE);
-        arr.put("inv_date_created"              , DB_datatype.Datatype.DATETIME);
+        arr.put("ini_id"			, DB_datatype.Datatype.INT);
+        arr.put("ini_ref_invoice"               , DB_datatype.Datatype.REFERENCE.set_reference("invoice"));
+        arr.put("ini_ref_quote_item"            , DB_datatype.Datatype.REFERENCE.set_reference("quote_item"));
         return arr;
     }
     //--------------------------------------------------------------------------
-    @Override public String get_key() { return "inv_id"; }
+    @Override public String get_key() { return "ini_id"; }
     //--------------------------------------------------------------------------
-    @Override public String get_table() { return "invoice"; }
+    @Override public String get_table() { return "invoice_item"; }
     //--------------------------------------------------------------------------
-    @Override public String get_name() { return "Invoice"; }
+    @Override public String get_name() { return "Invoice Item"; }
     //--------------------------------------------------------------------------
-    @Override public String get_display() { return "inv_number"; }
+    @Override public String get_display() { return "ini_ref_invoice"; }
     //--------------------------------------------------------------------------
 	// methods
     //--------------------------------------------------------------------------
-    public String generate_account_nr() {
-        return this.generate_account_nr(null);
-    }
-    //--------------------------------------------------------------------------
-    public String generate_account_nr(Object id) {
-        Object nextId = id == null ? this.get_next_id() : id;
-        return ComString.pad("INV", 7, '0') + (nextId == null ? 1 : nextId);
+    public DB_quote_item get_quote_item() {
+        return new DB_quote_item(this.get("ini_ref_quote_item"));
     }
     //--------------------------------------------------------------------------
 }

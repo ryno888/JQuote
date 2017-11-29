@@ -8,7 +8,9 @@ package app.ui.invoice;
 import app.ui.quote.EditQuoteItem;
 import app.db.DB_address;
 import app.db.DB_invoice;
+import app.db.DB_invoice_item;
 import app.db.DB_person;
+import app.db.DB_quote_item;
 import app.ui.quote.QuoteItemList;
 import core.com.date.ComDate;
 import core.com.db.ComDBDatabase;
@@ -242,31 +244,46 @@ public class CreateInvoice extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        GenerateInvoice generateInvoice = new GenerateInvoice();
-		generateInvoice.setInv_account_nr(this.db_person.get("per_account_nr").toString());
-		generateInvoice.setInv_company_name(this.db_person.get("per_trading_name").toString());
-		generateInvoice.setInv_invoice_nr(this.db_invoice.get("inv_number").toString());
-		generateInvoice.setInv_company_add_line1(this.db_address.get("add_line1").toString());
-		generateInvoice.setInv_company_add_line2(this.db_address.get("add_line2").toString());
-		generateInvoice.setInv_company_city(this.db_address.get("add_suburb").toString());
-		generateInvoice.setInv_company_code(this.db_address.get("add_code").toString());
-		generateInvoice.setInv_company_country(this.db_address.get("add_country").toString());
-		generateInvoice.setInv_total(calculateInvoiceTotal());
-		generateInvoice.setInv_date_created(ComDate.getDate());
-                generateInvoice.additem(1, "test1", 5.0, 2);
-                generateInvoice.additem(1, "test2", 5.0, 3);
-//		invoiceItemArr.forEach(e -> {
-//			InvoiceItem invoice_item = (InvoiceItem) e;
-//			DB_quote_item db_quote_item = new DB_quote_item();
-//			QuoteItem quoteItem = (QuoteItem) db_quote_item.get_fromdb(invoice_item.getIniRefQuoteItem());
-//
-//			generateInvoice.additem(quoteItem.getQutId(), quoteItem.getQutName(), quoteItem.getQutUnitPrice(), quoteItem.getQutUnit());
-//		});
-		generateInvoice.saveAs();
-        
         if(this.itemArr.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please add items to the quote before you continue", "Alert", JOptionPane.WARNING_MESSAGE);
         }else{
+            
+            GenerateInvoice generateInvoice = new GenerateInvoice();
+            ArrayList<DB_invoice_item> invoiceItemArr = new ArrayList();
+            
+            this.db_invoice.set("inv_date_created", ComDate.getDate());
+            this.db_invoice.set("inv_number", invNumberField.getText());
+            this.db_invoice.set("inv_ref_person", this.id);
+            this.db_invoice.set("inv_total_excl", calculateInvoiceTotal());
+            this.db_invoice.insert();
+            
+            this.itemArr.forEach(e -> {
+                System.out.println(e[0]);
+                DB_invoice_item db_invoice_item = new DB_invoice_item();
+                db_invoice_item.set("ini_ref_invoice", db_invoice.get_id());
+                db_invoice_item.set("ini_ref_quote_item", e[0]);
+                db_invoice_item.insert();
+                invoiceItemArr.add(db_invoice_item);
+            });
+            
+            generateInvoice.setInv_account_nr(this.db_person.get("per_account_nr").toString());
+            generateInvoice.setInv_company_name(this.db_person.get("per_trading_name").toString());
+            generateInvoice.setInv_invoice_nr(this.db_invoice.get("inv_number").toString());
+            generateInvoice.setInv_company_add_line1(this.db_address.get("add_line1").toString());
+            generateInvoice.setInv_company_add_line2(this.db_address.get("add_line2").toString());
+            generateInvoice.setInv_company_city(this.db_address.get("add_suburb").toString());
+            generateInvoice.setInv_company_code(this.db_address.get("add_code").toString());
+            generateInvoice.setInv_company_country(this.db_address.get("add_country").toString());
+            generateInvoice.setInv_total(calculateInvoiceTotal());
+            generateInvoice.setInv_date_created(ComDate.getDate());
+            invoiceItemArr.forEach(e -> {
+                DB_quote_item quote_item = e.get_quote_item();
+                System.out.println(quote_item.obj);
+                generateInvoice.additem(quote_item.get_id(), quote_item.get("qut_name"), quote_item.get("qut_unit_price"), quote_item.get("qut_unit"));
+            });
+            generateInvoice.saveAs();
+            
+            
 //            GenerateInvoice generateInvoice = new GenerateInvoice();
 //            ArrayList<InvoiceItem> invoiceItemArr = new ArrayList();
 //            Invoice invoice = (Invoice)db_invoice.get_fromdefault();
@@ -398,7 +415,7 @@ public class CreateInvoice extends javax.swing.JFrame {
     private void setFields() {
         perAttentionToField.setText(this.db_person.format_name());
         perTradingNameField.setText(this.db_person.get("per_trading_name").toString());
-        invNumberField.setText(this.db_invoice.generate_invoice_nr());
+        invNumberField.setText(this.db_invoice.generate_account_nr());
     }
     //--------------------------------------------------------------------------
     public void addItem(String qut_id, String qut_name, String qut_unit, String qut_price, String qut_unit_price) {
