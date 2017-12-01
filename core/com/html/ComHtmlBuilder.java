@@ -105,3 +105,14 @@ public class ComHtmlBuilder {
     }
     //--------------------------------------------------------------------------
 }
+
+
+//        ComHtmlBuilder builder = new ComHtmlBuilder();
+//        builder.label("Ryno", new HashMap<String, Object>(){{
+//            this.put(".test", true);
+//            this.put("@test1", "test1");
+//        }});
+//        builder.header(1,"Ryno", new HashMap<String, Object>(){{
+//			this.put("@111", "111");
+//        }});
+//        System.out.println(builder.get_html());

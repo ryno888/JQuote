@@ -333,7 +333,8 @@ public class PersonList extends javax.swing.JFrame {
                 ComClipboard.copy(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString());
             });
             editItem.addActionListener(e -> {
-                new PersonEditClient(getId(), jTable1.getSelectedRow()).setVisible(true);
+                new PersonManageClient(getId(), jTable1.getSelectedRow()).setVisible(true);
+//                new PersonEditClient(getId(), jTable1.getSelectedRow()).setVisible(true);
             });
             createInvoiceItem.addActionListener(e -> {
                 new CreateInvoice(getId()).setVisible(true);

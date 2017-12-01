@@ -23,11 +23,10 @@ public class PersonEditClient extends javax.swing.JFrame {
     /**
      * Creates new form AddClient
      */
-    public PersonEditClient(int id, int jTableRow) {
+    public PersonEditClient(Object per_id, Object jTableRow) {
         initComponents();
-        this.setTitle("Edit Quote Item");
-        this.id = id;
-        this.jTableRow = jTableRow;
+        this.id = (int)per_id;
+        this.jTableRow = (int)jTableRow;
         this.person = new DB_person(id);
         this.address = this.person.get_address();
         this.setFields();
@@ -103,7 +102,7 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +111,7 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(5, 5, 5))
+                .addContainerGap())
         );
 
         jLabel1.setText("Firstname");
@@ -159,11 +158,11 @@ public class PersonEditClient extends javax.swing.JFrame {
                         .addComponent(jRadioButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jRadioButton2)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 200, Short.MAX_VALUE))
                     .addComponent(perContactNumberField)
                     .addComponent(perEmailField)
                     .addComponent(perLastnameField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(perFirstnameField, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(perFirstnameField)
                     .addComponent(perTradingNameField))
                 .addContainerGap())
         );
@@ -206,8 +205,11 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,8 +219,8 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -251,11 +253,11 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addCityTextField)
                     .addComponent(addLine2TextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addLine1extField, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(addLine1extField)
                     .addComponent(addSuburbTextField)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(addCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 196, Short.MAX_VALUE))
                     .addComponent(addCountryTextField))
                 .addContainerGap())
         );
@@ -282,7 +284,7 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addCountryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,8 +298,8 @@ public class PersonEditClient extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,7 +310,7 @@ public class PersonEditClient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(416, 474));
+        setSize(new java.awt.Dimension(436, 539));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -337,12 +339,14 @@ public class PersonEditClient extends javax.swing.JFrame {
 		address.set("add_code", addCodeField.getText());
 		address.save();
 
-		DefaultTableModel model = (DefaultTableModel) PersonList.jTable1.getModel();
-        model.setValueAt(this.person.get("per_id"), this.jTableRow, 0);
-        model.setValueAt(this.person.get("per_account_nr"), this.jTableRow, 1);
-        model.setValueAt(this.person.format_name(), this.jTableRow, 2);
-        model.setValueAt(this.person.get("per_email"), this.jTableRow, 3);
-        model.setValueAt((jRadioButton1.isSelected()), this.jTableRow, 4);
+                if(this.jTableRow != 0){
+                    DefaultTableModel model = (DefaultTableModel) PersonList.jTable1.getModel();
+                    model.setValueAt(this.person.get("per_id"), this.jTableRow, 0);
+                    model.setValueAt(this.person.get("per_account_nr"), this.jTableRow, 1);
+                    model.setValueAt(this.person.format_name(), this.jTableRow, 2);
+                    model.setValueAt(this.person.get("per_email"), this.jTableRow, 3);
+                    model.setValueAt((jRadioButton1.isSelected()), this.jTableRow, 4);
+                }
 
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -12,10 +12,6 @@ package app.main;
 import app.app.AppSystem;
 import app.config.Setup;
 import app.ui.MainPanel;
-import core.com.html.ComHtmlBuilder;
-import java.util.HashMap;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -28,16 +24,6 @@ public class Main {
      */
     public static void main(String[] args) {
         AppSystem.set_look_and_feel();
-        
-//        ComHtmlBuilder builder = new ComHtmlBuilder();
-//        builder.label("Ryno", new HashMap<String, Object>(){{
-//            this.put(".test", true);
-//            this.put("@test1", "test1");
-//        }});
-//        builder.header(1,"Ryno", new HashMap<String, Object>(){{
-//			this.put("@111", "111");
-//        }});
-//        System.out.println(builder.get_html());
         
         MainPanel main = new MainPanel();
         main.setTitle(Setup.SYSTEM_NAME);

@@ -41,7 +41,6 @@ public class QuoteItemList extends javax.swing.JFrame {
      */
     public QuoteItemList() {
         initComponents();
-        this.setTitle("Quote Item List");
         this.setTableContents();
         this.setPopupMenu();
     }
