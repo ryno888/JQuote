@@ -10,6 +10,7 @@
 package app.ui.person;
 
 import app.config.Constants;
+import app.ui.invoice.CreateInvoice;
 import core.com.date.ComDate;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
@@ -27,12 +28,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Ryno
  */
 public class PersonInvoiceHistory extends javax.swing.JPanel {
-
+    private final int id;
+    private final int jTableRow;
+    
     /**
      * Creates new form PersonInvoiceHistory
      */
-    public PersonInvoiceHistory(Object id) {
+    public PersonInvoiceHistory(Object per_id, Object jTableRow) {
         initComponents();
+        this.id = (int)per_id;
+        this.jTableRow = (int)jTableRow;
         this.setTableContents();
         this.setPopupMenu();
     }
@@ -81,10 +86,20 @@ public class PersonInvoiceHistory extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jButton1.setText("Create New Invoice");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new CreateInvoice(this.id).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

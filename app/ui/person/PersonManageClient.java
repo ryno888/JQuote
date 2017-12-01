@@ -25,7 +25,8 @@ import javax.swing.Timer;
  * @author Ryno
  */
 public class PersonManageClient extends javax.swing.JFrame {
-
+    private final int id;
+    private final int jTableRow;
     /**
      * Creates new form PersonManageClient
      * @param per_id
@@ -33,6 +34,8 @@ public class PersonManageClient extends javax.swing.JFrame {
      */
     public PersonManageClient(Object per_id, Object jTableRow) {
         initComponents();
+        this.id = (int)per_id;
+        this.jTableRow = (int)jTableRow;
         jPanel3.setLayout(new GridLayout());
         this.set_manage_bar_config();
         
@@ -63,7 +66,8 @@ public class PersonManageClient extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Manage Client");
 
         jButton3.setText("Edit Details");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +204,7 @@ public class PersonManageClient extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         jPanel3.removeAll();
-        jPanel3.add(new PersonInvoiceHistory(2));
+        jPanel3.add(new PersonInvoiceHistory(this.id, this.jTableRow));
         jPanel3.validate();
         jPanel3.repaint();
     }//GEN-LAST:event_jButton4ActionPerformed
