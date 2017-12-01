@@ -12,18 +12,21 @@ package app.config;
  */
 public final class Setup {
     
-  public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-  public static final String DB_URL = "jdbc:mysql://localhost:3306/";
-  public static final String DB_NAME = "loc_quoteapp";
-  public static final String DB_USER = "root";
-  public static final String DB_PASSWORD = "root";
+    //demo
+//    public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+//    public static final String DB_URL = "jdbc:mysql://localhost:3306/";
+//    public static final String DB_NAME = "loc_quoteapp";
+//    public static final String DB_USER = "root";
+//    public static final String DB_PASSWORD = "root";
+    
+    //live
+    public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+    public static final String DB_URL = "jdbc:mysql://sql11.freemysqlhosting.net/";
+    public static final String DB_NAME = "sql11208294";
+    public static final String DB_USER = "sql11208294";
+    public static final String DB_PASSWORD = "hqWYKTHGrH";
   
   public static final String SYSTEM_NAME = "Quote App";
   
-//  public static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-//  public static final String DB_URL = "jdbc:derby:";
-//  public static final String DB_NAME = "loc_quoteapp";
-//  public static final String DB_USER = "root";
-//  public static final String DB_PASSWORD = "root";
   
 }

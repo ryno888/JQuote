@@ -12,6 +12,9 @@ package app.main;
 import app.app.AppSystem;
 import app.config.Setup;
 import app.ui.MainPanel;
+import core.com.db.ComDBConnection;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
@@ -22,12 +25,23 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         AppSystem.set_look_and_feel();
         
-        MainPanel main = new MainPanel();
-        main.setTitle(Setup.SYSTEM_NAME);
-        main.setVisible(true);
+        Loader loader = new Loader();
+        loader.setUndecorated(true);
+        loader.setVisible(true);
+        
+        ComDBConnection comDBcon = new ComDBConnection();
+        Connection con = comDBcon.getConnection();
+        if(con.isValid(15)){
+            MainPanel main = new MainPanel();
+            main.setTitle(Setup.SYSTEM_NAME);
+            loader.setVisible(false);
+            main.setVisible(true);
+        }
+        
+        
     }
     
 }

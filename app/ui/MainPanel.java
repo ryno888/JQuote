@@ -7,6 +7,7 @@ package app.ui;
 
 import app.ui.quote.QuoteItemList;
 import app.ui.person.PersonList;
+import app.ui.preferences.PreferenceConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +30,6 @@ public class MainPanel extends javax.swing.JFrame {
         for (int i = 0; i < maxDataPoints; i++) {
             scores.add(random.nextInt(maxScore));
         }
-//        tabWrapperPane.addTab("Dashboard", new Dashboard(scores));
         tabWrapperPane.addTab("Client List", new PersonList().getRootPane());
         tabWrapperPane.addTab("Price List", new QuoteItemList().getRootPane());
     }
@@ -48,6 +48,7 @@ public class MainPanel extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 500));
@@ -67,6 +68,15 @@ public class MainPanel extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
+
+        jMenuItem1.setText("Preferences");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -85,6 +95,11 @@ public class MainPanel extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(885, 551));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new PreferenceConfig().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +141,7 @@ public class MainPanel extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane tabWrapperPane;
     // End of variables declaration//GEN-END:variables

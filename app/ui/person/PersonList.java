@@ -5,11 +5,8 @@
  */
 package app.ui.person;
 
-import app.ui.person.PersonEditClient;
-import app.ui.person.PersonAddClient;
 import app.db.DB_person;
 import app.ui.invoice.CreateInvoice;
-import app.ui.MainPanel;
 import app.ui.quote.QuoteItemList;
 import core.com.db.ComDBDatabase;
 import core.com.db.ComDBQueryBuilder;
@@ -40,6 +37,7 @@ public class PersonList extends javax.swing.JFrame {
         initComponents();
         this.setTableContents();
         this.setPopupMenu();
+        this.set_actions();
     }
 
     /**
@@ -187,7 +185,9 @@ public class PersonList extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        if(evt.getClickCount() == 2){
+            new PersonManageClient(getId(), jTable1.getSelectedRow()).setVisible(true);
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
@@ -347,6 +347,10 @@ public class PersonList extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(QuoteItemList.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    //--------------------------------------------------------------------------
+    private void set_actions() {
+        
     }
     //--------------------------------------------------------------------------
 }
