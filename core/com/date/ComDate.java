@@ -9,6 +9,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static app.config.Constants.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComponent;
+import javax.swing.Timer;
 
 /**
  *
@@ -58,4 +67,41 @@ public class ComDate {
         
         return currentDate;
     }
+    //----------------------------------------------------------------------------------------
+//    /**
+//     * returns a date that is formatted to a certain format
+//     * @param date
+//     * @param format
+//     * @return 
+//     */
+//    public static void setTimeOnElement(JComponent component){
+//        Timer SimpleTimer = new Timer(1000, new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Calendar cal = new GregorianCalendar();
+//                int second = cal.get(Calendar.SECOND);
+//                int min = cal.get(Calendar.MINUTE);
+//                int hour = cal.get(Calendar.HOUR);
+//                String s =(checkTime(hour)+":"+checkTime(min)+":"+checkTime(second));
+//                try {
+//                    component.getClass().getMethod("setText", s.getClass()).invoke(component, s);
+//                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+//                    Logger.getLogger(ComDate.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        });
+//        SimpleTimer.start();
+//    }
+    //----------------------------------------------------------------------------------------
+    public static String checkTime(int t) {
+        String time1;
+        if (t < 10) {
+            time1 = ("0" + t);
+        } else {
+            time1 = ("" + t);
+        }
+        return time1;
+    }
+    //----------------------------------------------------------------------------------------
+    
 }

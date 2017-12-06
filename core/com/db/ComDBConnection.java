@@ -46,6 +46,10 @@ public class ComDBConnection {
         this.dbPassword = Setup.DB_PASSWORD;
     }
     //--------------------------------------------------------------------------
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+    //--------------------------------------------------------------------------
     public Connection getConnection(){
         if(this.conn != null){ return this.conn; }
         try {
