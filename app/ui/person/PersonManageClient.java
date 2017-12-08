@@ -196,7 +196,7 @@ public class PersonManageClient extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         jPanel3.removeAll();
-        jPanel3.add(new PersonEditClient(2, 1).getRootPane());
+        jPanel3.add(new PersonEditClient(this.id, this.jTableRow).getRootPane());
         jPanel3.validate();
         jPanel3.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed

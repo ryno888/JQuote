@@ -49,11 +49,7 @@ public class Main {
 //    }
     //--------------------------------------------------------------------------
     public static void main(String[] args) throws SQLException {
-        try {
-            ReadXMLFile.read();
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println(ReadXMLFile.read());
     }
     //--------------------------------------------------------------------------
     

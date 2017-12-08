@@ -9,6 +9,7 @@
  */
 package app.main;
 
+import core.com.string.ComString;
 import core.com.utils.ComDirectory;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,6 +18,11 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.DOMException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -24,45 +30,31 @@ import java.io.File;
  */
 public class ReadXMLFile {
 
-    public static void read() {
+    public static HashMap<String, String> read() {
+		HashMap <String, String> result = new HashMap();
         try {
-
             File fXmlFile = new File(ComDirectory.get_base_dir()+"/config.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
-
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
-
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
             NodeList nList = doc.getElementsByTagName("databse");
-
-            System.out.println("----------------------------");
-
             for (int temp = 0; temp < nList.getLength(); temp++) {
-
                 Node nNode = nList.item(temp);
-
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
                     Element eElement = (Element) nNode;
-
-                    System.out.println("dbdriver : " + eElement.getElementsByTagName("dbdriver").item(0).getTextContent());
-                    System.out.println("dburl : " + eElement.getElementsByTagName("dburl").item(0).getTextContent());
-                    System.out.println("dbname : " + eElement.getElementsByTagName("dbname").item(0).getTextContent());
-                    System.out.println("dbuser : " + eElement.getElementsByTagName("dbuser").item(0).getTextContent());
-                    System.out.println("dbpassword : " + eElement.getElementsByTagName("dbpassword").item(0).getTextContent());
-
+					result.put("dbdriver", eElement.getElementsByTagName("dbdriver").item(0).getTextContent());
+					result.put("dburl", eElement.getElementsByTagName("dburl").item(0).getTextContent());
+					result.put("dbname", eElement.getElementsByTagName("dbname").item(0).getTextContent());
+					result.put("dbuser", eElement.getElementsByTagName("dbuser").item(0).getTextContent());
+					result.put("dbpassword", ComString.decrypt(eElement.getElementsByTagName("dbpassword").item(0).getTextContent()));
                 }
             }
-        } catch (Exception e) {
+        } catch (ParserConfigurationException | SAXException | IOException | DOMException e) {
             e.printStackTrace();
         }
+		
+		return result;
     }
     
 }
