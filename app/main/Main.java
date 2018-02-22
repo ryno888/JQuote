@@ -31,26 +31,26 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String[] args) throws SQLException {
-//        AppSystem.set_look_and_feel();
-//        
-//        Loader loader = new Loader();
-//        loader.setUndecorated(true);
-//        loader.setVisible(true);
-//        
-//        ComDBConnection comDBcon = new ComDBConnection();
-//        Connection con = comDBcon.getConnection();
-//        if(con.isValid(15)){
-//            MainPanel main = new MainPanel();
-//            main.setTitle(Setup.SYSTEM_NAME);
-//            loader.setVisible(false);
-//            main.setVisible(true);
-//        }
-//    }
-    //--------------------------------------------------------------------------
     public static void main(String[] args) throws SQLException {
-        System.out.println(ReadXMLFile.read());
+        AppSystem.set_look_and_feel();
+        
+        Loader loader = new Loader();
+        loader.setUndecorated(true);
+        loader.setVisible(true);
+        
+        ComDBConnection comDBcon = new ComDBConnection();
+        Connection con = comDBcon.getConnection();
+        if(con.isValid(15)){
+            MainPanel main = new MainPanel();
+            main.setTitle(Setup.SYSTEM_NAME);
+            loader.setVisible(false);
+            main.setVisible(true);
+        }
     }
+    //--------------------------------------------------------------------------
+//    public static void main(String[] args) throws SQLException {
+//        System.out.println(ReadXMLFile.read());
+//    }
     //--------------------------------------------------------------------------
     
 }

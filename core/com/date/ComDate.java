@@ -12,6 +12,7 @@ import static app.config.Constants.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
@@ -66,6 +67,31 @@ public class ComDate {
         String currentDate = dateFormat.format(date); //2014/08/06 15:59:48
         
         return currentDate;
+    }
+    //----------------------------------------------------------------------------------------
+    /**
+     * returns a date that is formatted to a certain format
+     * @param date
+     * @param format
+     * @return 
+     */
+    public static String getDate(String date, String format){
+        
+        SimpleDateFormat formatter = new SimpleDateFormat(DATETIME);
+        String dateInString = date;
+
+        try {
+
+            Date dateFormatter = formatter.parse(dateInString);
+            System.out.println(date);
+            System.out.println(formatter.format(date));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return null;
     }
     //----------------------------------------------------------------------------------------
 //    /**

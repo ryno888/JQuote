@@ -295,7 +295,8 @@ public class CreateInvoice extends javax.swing.JFrame {
             generateInvoice.setInv_invoice_nr(this.db_invoice.get("inv_number").toString());
             generateInvoice.setInv_company_add_line1(this.db_address.get("add_line1").toString());
             generateInvoice.setInv_company_add_line2(this.db_address.get("add_line2").toString());
-            generateInvoice.setInv_company_city(this.db_address.get("add_suburb").toString());
+            generateInvoice.setInv_company_suburb(this.db_address.get("add_suburb").toString());
+            generateInvoice.setInv_company_city(this.db_address.get("add_town").toString());
             generateInvoice.setInv_company_code(this.db_address.get("add_code").toString());
             generateInvoice.setInv_company_country(this.db_address.get("add_country").toString());
             generateInvoice.setInv_total(calculateInvoiceTotal());
@@ -303,7 +304,8 @@ public class CreateInvoice extends javax.swing.JFrame {
             invoiceItemArr.forEach(e -> {
                 DB_quote_item quote_item = e.get_quote_item();
                 System.out.println(quote_item.obj);
-                generateInvoice.additem(quote_item.get_id(), quote_item.get("qut_name"), quote_item.get("qut_unit_price"), quote_item.get("qut_unit"));
+//                generateInvoice.additem(quote_item.get_id(), quote_item.get("qut_name"), quote_item.get("qut_unit_price"), quote_item.get("qut_unit"), quote_item.get("qut_price"));
+                generateInvoice.additem(quote_item);
             });
             generateInvoice.saveAs();
             

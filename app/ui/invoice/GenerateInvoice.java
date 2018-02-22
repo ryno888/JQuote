@@ -10,6 +10,7 @@ package app.ui.invoice;
  * @author Ryno Laptop
  */
 import app.config.Constants;
+import app.db.DB_quote_item;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -69,9 +70,18 @@ public class GenerateInvoice {
         this.inv_total = 0.00;
     }
     //------------------------------------------------------------------------------
-    public void additem(Object id, Object description, Object unitprice, Object qty) {
-        Double price  = Double.parseDouble(unitprice.toString()) * Double.parseDouble(qty.toString());
-        item_arr.add(new Object[]{id, description, qty, formatter.format(unitprice), formatter.format(price)});
+    public void additem(Object id, Object description, Object unitprice, Object qty, Object total) {
+        item_arr.add(new Object[]{id, description, qty, formatter.format(unitprice), formatter.format(total)});
+    }
+    //------------------------------------------------------------------------------
+    public void additem(DB_quote_item quote_item) {
+        item_arr.add(new Object[]{
+            quote_item.get_id(), 
+            quote_item.get("qut_name"), 
+            quote_item.get("qut_unit"), 
+            formatter.format(quote_item.get("qut_unit_price")), 
+            formatter.format(quote_item.get("qut_price"))
+        });
     }
     //------------------------------------------------------------------------------
     public String getFileName() {
@@ -156,9 +166,10 @@ public class GenerateInvoice {
             cb.setLineWidth(1f);
 
             // Invoice Header box Text Headings 
-            createHeadings(cb, 422, 733, "Account No.");
-            createHeadings(cb, 422, 713, "Invoice No.");
-            createHeadings(cb, 422, 693, "Invoice Date");
+            createHeadings(cb, 422, 740, "Account No.");
+            createHeadings(cb, 422, 725, "Invoice No.");
+            createHeadings(cb, 422, 710, "Invoice Date");
+            createHeadings(cb, 422, 695, "Client VAT#");
 
             // Invoice Detail box layout 
             cb.rectangle(30, 150, 540, 500);
@@ -179,7 +190,7 @@ public class GenerateInvoice {
             createHeadings(cb, 92, 633, "Quantity");
             createHeadings(cb, 152, 633, "Item Description");
             createHeadings(cb, 432, 633, "Unit Price");
-            createHeadings(cb, 502, 633, "Excl. Total");
+            createHeadings(cb, 502, 633, "Total");
 
             //add the images
             Image companyLogo = Image.getInstance(getClass().getResource("/assets/pdf/pdf-header.png"));
@@ -202,12 +213,20 @@ public class GenerateInvoice {
             createHeadings(cb, 250, 740, this.inv_company_name);
             createHeadings(cb, 250, 725, this.inv_company_add_line1);
             createHeadings(cb, 250, 710, this.inv_company_add_line2);
-            createHeadings(cb, 250, 695, this.inv_company_city + ", " + this.inv_company_suburb + " - " + this.inv_company_code);
+            
+            StringBuilder addr = new StringBuilder();
+            addr.append(this.inv_company_city).append(", ").append(this.inv_company_suburb);
+            if(!this.inv_company_code.isEmpty()){
+                addr.append(", ").append(this.inv_company_code);
+            }
+            
+            createHeadings(cb, 250, 695, addr.toString());
             createHeadings(cb, 250, 680, this.inv_company_country);
 
-            createHeadings(cb, 482, 733, this.inv_account_nr);
-            createHeadings(cb, 482, 713, this.inv_invoice_nr);
-            createHeadings(cb, 482, 693, this.inv_date_created);
+            createHeadings(cb, 482, 740, this.inv_account_nr);
+            createHeadings(cb, 482, 725, this.inv_invoice_nr);
+            createHeadings(cb, 482, 710, this.inv_date_created.substring(0, 10));
+            createHeadings(cb, 482, 695, "-");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -222,7 +241,7 @@ public class GenerateInvoice {
                     
             createContent(cb, 498, 105, "Sub Total", PdfContentByte.ALIGN_RIGHT, 10);
             createContent(cb, 568, 105, subtotal, PdfContentByte.ALIGN_RIGHT, 10);
-            createContent(cb, 498, 90, "Total (Excl. VAT)", PdfContentByte.ALIGN_RIGHT, 10);
+            createContent(cb, 498, 90, "Total", PdfContentByte.ALIGN_RIGHT, 10);
             createContent(cb, 568, 90, formatter.format(this.inv_total), PdfContentByte.ALIGN_RIGHT, 10);
             
             createContent(cb, 32, 120, "Banking Details:", PdfContentByte.ALIGN_LEFT, 10);
