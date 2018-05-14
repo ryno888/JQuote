@@ -13,14 +13,9 @@ import app.app.AppSystem;
 import app.config.Setup;
 import app.ui.MainPanel;
 import core.com.db.ComDBConnection;
-import core.com.string.ComString;
-import core.com.utils.ComDirectory;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.SecretKey;
 
 /**
  *

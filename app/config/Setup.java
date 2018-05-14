@@ -13,11 +13,18 @@ package app.config;
 public final class Setup {
     
     //demo
-    public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/";
-    public static final String DB_NAME = "loc_quoteapp";
+    public static final String DB_DRIVER = "org.sqlite.JDBC";
+    public static final String DB_URL = "/resources/";
+    public static final String DB_NAME = "quoteapp.sqlite";
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "root";
+    public static final boolean IS_RESOURCE = true;
+    
+//    public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+//    public static final String DB_URL = "jdbc:mysql://localhost:3306/";
+//    public static final String DB_NAME = "loc_quoteapp";
+//    public static final String DB_USER = "root";
+//    public static final String DB_PASSWORD = "root";
     
     //live
 //    public static final String DB_DRIVER = "com.mysql.jdbc.Driver";

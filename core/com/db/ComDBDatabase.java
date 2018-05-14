@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import app.ui.invoice.CreateInvoice;
 
 
 /**
@@ -39,7 +38,7 @@ public class ComDBDatabase {
                 return rs.getObject(1).toString();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComDBDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
